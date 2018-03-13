@@ -3,7 +3,8 @@ body, html{
 }
 body{
   margin: 0px;
-  background-color:#444;
+  background-image: url('stage.jpg');
+  background-size: cover;
   font-size: 18px;
 }
 body, a:link, a:visited, a:active{
@@ -44,4 +45,8 @@ body, a:link, a:visited, a:active{
   right: 4px;
   bottom: 4px;
   position:absolute;
+}
+
+.screenwipe{
+
 }

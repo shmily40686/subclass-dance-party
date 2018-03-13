@@ -60,4 +60,10 @@ $(document).ready(function() {
     }
     cornerButtonClicked = !cornerButtonClicked;
   });
+
+  $('.screenWipeButton').on('click', function(event) {
+    var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
+    var dancerMakerFunction = window[dancerMakerFunctionName];
+    console.log('clicked screenwipe');
+  });
 });
