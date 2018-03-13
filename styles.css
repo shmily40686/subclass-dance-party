@@ -25,3 +25,23 @@ body, a:link, a:visited, a:active{
   border-radius:10px;
   position:absolute;
 }
+
+.cornerdancerleft{
+  height: 200px;
+  width: 200px;
+  /* replace this with the transparent one & fix sizing */
+  background-image: url('frog-dance-left.gif');
+  left: 4px;
+  bottom: 4px;
+  position:absolute;
+}
+
+.cornerdancerright{
+  height: 200px;
+  width: 200px;
+    /* replace this with the transparent one & fix sizing */
+  background-image: url('frog-dance-right.gif');
+  right: 4px;
+  bottom: 4px;
+  position:absolute;
+}

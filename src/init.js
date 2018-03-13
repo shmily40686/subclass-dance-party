@@ -1,3 +1,4 @@
+var cornerButtonClicked = false;
 $(document).ready(function() {
   window.dancers = [];
 
@@ -21,13 +22,42 @@ $(document).ready(function() {
     var dancerMakerFunction = window[dancerMakerFunctionName];
 
     // make a dancer with a random position
-
-    var dancer = dancerMakerFunction(
+    var dancer = new dancerMakerFunction(
       $("body").height() * Math.random(),
       $("body").width() * Math.random(),
-      Math.random() * 1000
+      Math.random() * 1000,
+      true
     );
     $('body').append(dancer.$node);
   });
-});
 
+  $('.addCornerDancerButton').on('click', function(event) {
+    var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
+    var dancerMakerFunction = window[dancerMakerFunctionName];
+
+    if (cornerButtonClicked === false) {
+      var dancer = new dancerMakerFunction(
+        $("body").height() * Math.random(),
+        $("body").width() * Math.random(),
+        Math.random() * 1000,
+        false,
+        true
+      );
+
+      var dancer2 = new dancerMakerFunction(
+        $("body").height() * Math.random(),
+        $("body").width() * Math.random(),
+        Math.random() * 1000,
+        false,
+        false
+      );
+
+      $('body').append(dancer.$node);
+      $('body').append(dancer2.$node);
+    } else {
+      $('.cornerdancerleft').remove('.cornerdancerleft');
+      $('.cornerdancerright').remove('.cornerdancerright');
+    }
+    cornerButtonClicked = !cornerButtonClicked;
+  });
+});
