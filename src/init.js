@@ -64,6 +64,7 @@ $(document).ready(function() {
   $('.screenWipeButton').on('click', function(event) {
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
     var dancerMakerFunction = window[dancerMakerFunctionName];
-    console.log('clicked screenwipe');
+    var dancer = new dancerMakerFunction();
+    $('body').append(dancer.$node);
   });
 });
