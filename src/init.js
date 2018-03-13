@@ -66,5 +66,12 @@ $(document).ready(function() {
     var dancerMakerFunction = window[dancerMakerFunctionName];
     var dancer = new dancerMakerFunction();
     $('body').append(dancer.$node);
+    var animation = function() {
+      //run animation code on the face here
+    }
+    // $( '.screenwipe' ).effect( "size", {
+    //   to: { width: 1260, height: 1260 }
+    // }, 1000 );
+    animation();
   });
 });

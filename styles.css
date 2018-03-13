@@ -48,9 +48,11 @@ body, a:link, a:visited, a:active{
 }
 
 .screenwipe{
-  margin: 20% 40%;
+  margin: auto;
   width: 420px;
   height: 420px;
   position: absolute;
+  background-size: cover;
+  background-position: center;
   background-image: url('shrek.png');
 }
