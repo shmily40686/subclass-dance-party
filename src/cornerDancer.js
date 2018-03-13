@@ -7,6 +7,6 @@ CornerDancer.prototype = Object.create(Dancer.prototype);
 
 CornerDancer.prototype.constructor = CornerDancer;
 
-CornerDancer.prototype.step = function() {
-
+CornerDancer.prototype.lineUp = function() {
+  
 }

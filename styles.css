@@ -10,6 +10,13 @@ body{
 body, a:link, a:visited, a:active{
   color: lightblue;
 }
+
+@keyframes shrek-dance {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(30deg); }
+  100% { transform: rotate(-30deg); }
+}
+
 .title, .addDancerButton{
   padding:5px 12px;
   float:right;
@@ -28,31 +35,65 @@ body, a:link, a:visited, a:active{
 }
 
 .cornerdancerleft{
-  height: 200px;
-  width: 200px;
+  height: 333px;
+  width: 390px;
   /* replace this with the transparent one & fix sizing */
-  background-image: url('frog-dance-left.gif');
+  background-image: url('frog-corner.gif');
   left: 4px;
   bottom: 4px;
   position:absolute;
 }
 
 .cornerdancerright{
-  height: 200px;
-  width: 200px;
+  height: 333px;
+  width: 390px;
     /* replace this with the transparent one & fix sizing */
-  background-image: url('frog-dance-right.gif');
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  background-image: url('frog-corner.gif');
   right: 4px;
   bottom: 4px;
   position:absolute;
 }
 
 .screenwipe{
-  margin: auto;
-  width: 420px;
-  height: 420px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 105px;
+  height: 105px;
   position: absolute;
   background-size: cover;
   background-position: center;
   background-image: url('shrek.png');
+  transition: 0.5s;
+  -webkit-animation: shrek-dance 3s infinite; /* Safari 4+ */
+  -moz-animation:    shrek-dance 3s infinite; /* Fx 5+ */
+  -o-animation:      shrek-dance 3s infinite; /* Opera 12+ */
+  animation:         shrek-dance 3s infinite; /* IE 10+, Fx 29+ */
+}
+
+.screenwipe:hover{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 210px;
+  height: 210px;
+  transform: rotate(var(rotation););
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  background-image: url('shrek.png');
+}
+.crazyfrog{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url('kermit.gif');
+  background-size: cover;
+  background-position: center;
+  width: 450px;
+  height: 658px;
 }

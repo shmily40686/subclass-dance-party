@@ -30,6 +30,21 @@ $(document).ready(function() {
     );
     $('body').append(dancer.$node);
   });
+   $('.addCrazyFrogButton').on('click', function(event) {
+   
+    var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
+    var dancerMakerFunction = window[dancerMakerFunctionName];
+
+    // make a dancer with a random position
+    var dancer = new dancerMakerFunction(
+      $("body").height() / 2,
+      $("body").width() / 2,
+      Math.random() * 1000,
+      true
+    );
+    window.dancers.push(dancer);
+    $('body').append(dancer.$node);
+  });
 
   $('.addCornerDancerButton').on('click', function(event) {
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
@@ -51,7 +66,8 @@ $(document).ready(function() {
         false,
         false
       );
-
+      window.dancers.push(dancer);
+      window.dancers.push(dancer2);
       $('body').append(dancer.$node);
       $('body').append(dancer2.$node);
     } else {
@@ -59,12 +75,43 @@ $(document).ready(function() {
       $('.cornerdancerright').remove('.cornerdancerright');
     }
     cornerButtonClicked = !cornerButtonClicked;
+    console.log(window.dancers);
+  });
+
+  $('.lineUpButton').on('click', function(event) {
+    var widthBetweenDancers = $('body').width() / window.dancers.length;
+    for (var i = 0; i < window.dancers.length; i++) {
+      window.dancers[i].lineUp($('body').height()/2, i * widthBetweenDancers);
+    }
+  });
+  
+  $('.danceTogetherButton').on('click', function(event) {
+    for (var i = 0; i < window.dancers.length; i++) {
+      var closest = Infinity;
+      for (var j = 0; j < window.dancers.length; j++) {
+        var dancerBox = window.dancers[i].getBoundingClientRect();
+        var dancerBox2 = window.dancers[j].getBoundingClientRect();
+        var dancerLoc = [dancerBox.top - dancerBox.bottom/2, dancerBox.left - dancerBox.right/2];
+        var dancerLoc2 = [dancerBox2.top - dancerBox2.bottom/2, dancerBox2.left - dancerBox2.right/2];
+        var distance = [dancerLoc[0] - dancerLoc2[0]/2, dancerLoc[1] - dancerLoc2[1]/2];
+        if(dancerLoc - dancerLoc2 < closest){
+          closest = window.dancers[i].position - window.dancers[j].position;
+          
+        }
+      }
+    }
   });
 
   $('.screenWipeButton').on('click', function(event) {
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
     var dancerMakerFunction = window[dancerMakerFunctionName];
-    var dancer = new dancerMakerFunction();
+    var dancer = new dancerMakerFunction(
+        $("body").height() * Math.random(),
+        $("body").width() * Math.random(),
+        Math.random() * 1000,
+        true
+      );
+    window.dancers.push(dancer);
     $('body').append(dancer.$node);
     var animation = function() {
       //run animation code on the face here
