@@ -144,7 +144,7 @@ $(document).ready(function() {
       if(window.dancers[i].shouldLineUp !== undefined ){
         window.dancers[i].setPosition(temp * heightBetweenDancers , $('body').width()/2 + x);
         temp += 1;
-        if(i + 1 === half){
+        if(i === half){
           console.log("changing");
           x = -x;
           temp = 0;
