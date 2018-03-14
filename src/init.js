@@ -30,7 +30,34 @@ $(document).ready(function() {
     );
     $('body').append(dancer.$node);
   });
-   $('.addCrazyFrogButton').on('click', function(event) {
+  
+  $('.addDragFrogButton').on('click', function(event) {
+   
+    var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
+    var dancerMakerFunction = window[dancerMakerFunctionName];
+
+    // make a dancer with a random position
+    var dancer = new dancerMakerFunction(
+      $("body").height() * Math.random(),
+      $("body").width() * Math.random(),
+      Math.random() * 1000,
+      true
+    );
+    window.dancers.push(dancer);
+    $('body').append(dancer.$node);
+    
+    $( dancer.$node).mousedown(function(event) {
+        $( dancer.$node ).on( "mousemove", function( event ) {
+          dancer.setPosition(event.pageY - dancer.$node.height()/2, event.pageX - dancer.$node.width()/2);
+        });
+    });
+    
+    $( dancer.$node ).mouseup(function(event) {
+      $( dancer.$node).off( "mousemove" );
+    });
+  });
+  
+  $('.addCrazyFrogButton').on('click', function(event) {
    
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
     var dancerMakerFunction = window[dancerMakerFunctionName];
@@ -44,6 +71,11 @@ $(document).ready(function() {
     );
     window.dancers.push(dancer);
     $('body').append(dancer.$node);
+    $( '.crazyfrog' ).mouseover(function() {
+      var top = $("body").height() * Math.random();
+      var left= $("body").width() * Math.random();
+      dancer.setPosition(top, left);
+    });
   });
 
   $('.addCornerDancerButton').on('click', function(event) {
@@ -79,29 +111,48 @@ $(document).ready(function() {
   });
 
   $('.lineUpButton').on('click', function(event) {
-    var widthBetweenDancers = $('body').width() / window.dancers.length;
+    var lineUpLength = 0;
     for (var i = 0; i < window.dancers.length; i++) {
-      window.dancers[i].lineUp($('body').height()/2, i * widthBetweenDancers);
+      if (window.dancers[i].shouldLineUp !== undefined){
+        lineUpLength += 1;
+      }
+    }
+    console.log(lineUpLength);
+    var widthBetweenDancers = $('body').width() / lineUpLength;
+    var temp = 0;
+    for (var i = 0; i < window.dancers.length; i++) {
+      if (window.dancers[i].shouldLineUp !== undefined) {
+        window.dancers[i].lineUp($('body').height()/2, temp * widthBetweenDancers); 
+        temp += 1;
+      }
     }
   });
   
-  $('.danceTogetherButton').on('click', function(event) {
-    for (var i = 0; i < window.dancers.length; i++) {
-      var closest = Infinity;
-      for (var j = 0; j < window.dancers.length; j++) {
-        var dancerBox = window.dancers[i].getBoundingClientRect();
-        var dancerBox2 = window.dancers[j].getBoundingClientRect();
-        var dancerLoc = [dancerBox.top - dancerBox.bottom/2, dancerBox.left - dancerBox.right/2];
-        var dancerLoc2 = [dancerBox2.top - dancerBox2.bottom/2, dancerBox2.left - dancerBox2.right/2];
-        var distance = [dancerLoc[0] - dancerLoc2[0]/2, dancerLoc[1] - dancerLoc2[1]/2];
-        if(dancerLoc - dancerLoc2 < closest){
-          closest = window.dancers[i].position - window.dancers[j].position;
-          
+  $('.dancetogether').on('click', function(event) {
+    var lineUpLength = 0;
+    for(var i = 0; i < window.dancers.length; i++){
+      if(window.dancers[i].shouldLineUp !==undefined){
+        lineUpLength += 1;
+      }
+    }
+    var heightBetweenDancers = $('body').height() / (lineUpLength / 2);
+    var temp = 0;
+    var x = 75;
+    console.log(lineUpLength/2);
+    var half = Math.floor(lineUpLength/2);
+    for(var i = 0; i < window.dancers.length; i ++){
+      if(window.dancers[i].shouldLineUp !== undefined ){
+        window.dancers[i].setPosition(temp * heightBetweenDancers , $('body').width()/2 + x);
+        temp += 1;
+        if(i + 1 === half){
+          console.log("changing");
+          x = -x;
+          temp = 0;
         }
       }
     }
   });
-
+  
   $('.screenWipeButton').on('click', function(event) {
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
     var dancerMakerFunction = window[dancerMakerFunctionName];
@@ -116,6 +167,7 @@ $(document).ready(function() {
     var animation = function() {
       //run animation code on the face here
     }
+    
     // $( '.screenwipe' ).effect( "size", {
     //   to: { width: 1260, height: 1260 }
     // }, 1000 );
